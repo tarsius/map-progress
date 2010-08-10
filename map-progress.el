@@ -4,8 +4,8 @@
 
 ;; Author: Jonas Bernoulli <jonas@bernoul.li>
 ;; Created: 20100714
-;; Updated: 20100714
-;; Version: 0.1
+;; Updated: 20100810
+;; Version: 0.1+
 ;; Homepage: https://github.com/tarsius/map-progress/
 ;; Keywords: convenience
 
@@ -59,13 +59,15 @@
 Report progress in the echo.  Also see `make-progress-reporter'.
 \(fn MESSAGE MAP FUNCTION SEQUENCE [MIN-VALUE MAX-VALUE CURRENT-VALUE MIN-CHANGE MIN-TIME])"
   (let ((idx (make-symbol "--progress-mapcan-idx--"))
+	(msm (make-symbol "--progress-mapcan-msm--"))
 	(lst (make-symbol "--progress-mapcan-lst--"))
 	(prg (make-symbol "--progress-mapcan-prg--"))
 	(elt (make-symbol "--progress-mapcan-elt--")))
     `(let* ((,idx 0)
+	    (,msm ,msg)
 	    (,lst ,seq)
 	    (,prg (make-progress-reporter
-		   ,msg (or ,min 0) (or ,max (length ,lst)) ,@rest)))
+		   ,msm (or ,min 0) (or ,max (length ,lst)) ,@rest)))
        (prog1 (funcall ,map (lambda (,elt)
 			      (prog1 (funcall ,fn ,elt)
 				(progress-reporter-update ,prg (incf ,idx))))
