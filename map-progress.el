@@ -5,7 +5,7 @@
 ;; Author: Jonas Bernoulli <jonas@bernoul.li>
 ;; Created: 20100714
 ;; Updated: 20100810
-;; Version: 0.1+
+;; Version: 0.2
 ;; Homepage: https://github.com/tarsius/map-progress/
 ;; Keywords: convenience
 
@@ -58,11 +58,11 @@
   "Apply FUNCTION to each element of SEQUENCE using mapping function MAP.
 Report progress in the echo.  Also see `make-progress-reporter'.
 \(fn MESSAGE MAP FUNCTION SEQUENCE [MIN-VALUE MAX-VALUE CURRENT-VALUE MIN-CHANGE MIN-TIME])"
-  (let ((idx (make-symbol "--progress-mapcan-idx--"))
-	(msm (make-symbol "--progress-mapcan-msm--"))
-	(lst (make-symbol "--progress-mapcan-lst--"))
-	(prg (make-symbol "--progress-mapcan-prg--"))
-	(elt (make-symbol "--progress-mapcan-elt--")))
+  (let ((idx (make-symbol "--map-with-progress-idx--"))
+	(msm (make-symbol "--map-with-progress-msm--"))
+	(lst (make-symbol "--map-with-progress-lst--"))
+	(prg (make-symbol "--map-with-progress-prg--"))
+	(elt (make-symbol "--map-with-progress-elt--")))
     `(let* ((,idx 0)
 	    (,msm ,msg)
 	    (,lst ,seq)
