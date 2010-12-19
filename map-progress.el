@@ -4,8 +4,8 @@
 
 ;; Author: Jonas Bernoulli <jonas@bernoul.li>
 ;; Created: 20100714
-;; Updated: 20100810
-;; Version: 0.2
+;; Updated: 20101219
+;; Version: 0.2-git
 ;; Homepage: https://github.com/tarsius/map-progress/
 ;; Keywords: convenience
 
@@ -30,24 +30,19 @@
 
 ;; For many of the standard and CL mapping functions like `mapc' macros
 ;; like `mapc-with-progress-reporter' are defined here.  The arguments
-;; have the same meaning as the respective arguments of the respective
-;; function and `make-progress-reporter', which ever has an argument by
+;; have the same meaning as the respective arguments of the mapping
+;; function or of `make-progress-reporter', which ever has an argument by
 ;; the same name.
 
-;; Even when the respective function supports multiple sequences the
-;; macros defined here only support one.  One the other hand all of the
-;; `make-progress-reporter' arguments except for MESSAGE are optional.
-;; This includes the starting and final state argument.
+;; Even when the original mapping function supports multiple sequences the
+;; macros defined here only support one.  All of `make-progress-reporter's
+;; arguments except for MESSAGE are optional.  This includes the starting
+;; and final state arguments.
 
-;; Any mapping function with only exactly two mandatory arguments - a
-;; function which is applied to a sequence - are supported by
-;; `map-with-progress-reporter' which can be used when no specialized
-;; macro corresponding to a particular function exists, but additional
-;; arguments are not supported.
-
-;; Therefor at least the following functions are not supported: `map'.
-;; However support for the following divergent mapping functions has
-;; been implemented: .
+;; All standard mapping function with exactly two mandatory arguments are
+;; supported by `map-with-progress-reporter', which can be used when no
+;; progress reporting variant of that function has been defined here.  But
+;; any optional arguments the original might have are not supported.
 
 ;;; Code:
 
