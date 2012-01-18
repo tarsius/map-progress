@@ -4,7 +4,7 @@
 
 ;; Author: Jonas Bernoulli <jonas@bernoul.li>
 ;; Created: 20100714
-;; Version: 0.2.2-git
+;; Version: 0.3.0
 ;; Homepage: https://github.com/tarsius/map-progress/
 ;; Keywords: convenience
 
