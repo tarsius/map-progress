@@ -1,11 +1,10 @@
 ;;; map-progress.el --- mapping macros that report progress
 
-;; Copyright (C) 2010-2011  Jonas Bernoulli
+;; Copyright (C) 2010-2012  Jonas Bernoulli
 
 ;; Author: Jonas Bernoulli <jonas@bernoul.li>
 ;; Created: 20100714
-;; Updated: 20110822
-;; Version: 0.2.2
+;; Version: 0.2.2-git
 ;; Homepage: https://github.com/tarsius/map-progress/
 ;; Keywords: convenience
 
@@ -135,14 +134,19 @@ Also see `make-progress-reporter'.
 \(fn MESSAGE FUNCTION KEYMAP [MIN-VALUE MAX-VALUE CURRENT-VALUE MIN-CHANGE MIN-TIME])"
   `(map-with-progress-reporter ,msg 'map-keymap-internal ,fn ,seq ,min ,max ,@rest))
 
-(defmacro with-message (message &rest body)
+(defmacro mprg-with-message (message &rest body)
   "Display MESSAGE before and after executing the forms in BODY.
 
-The message is displayed using function `message' with \"...\"
-respectively \"...done\" appended.  The value of the last form in
-BODY is returned."
-  (let ((sym (gensym)))
-    `(let ((,sym (concat ,msg "...")))
+Display MESSAGE, with \"...\" respectively \"...done\" appended, before and
+after evaluationg BODY using function `message' .  MESSAGE can also have
+the form (SYMBOL MESSAGE) in which case SYMBOL is lexically bound to
+\"MESSAGE...\".  The value of the last form in BODY is returned."
+  (declare (indent 1))
+  (let ((sym (if (listp message)
+		 (prog1 (car message)
+		   (setq message (cadr message)))
+	       (make-symbol "--with-message--"))))
+    `(lexical-let ((,sym (concat ,message "...")))
        (message ,sym)
        (prog1 (progn ,@body)
 	 (message (concat ,sym "done"))))))
