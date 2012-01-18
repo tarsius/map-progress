@@ -38,10 +38,17 @@
 ;; arguments except for MESSAGE are optional.  This includes the starting
 ;; and final state arguments.
 
-;; All standard mapping function with exactly two mandatory arguments are
+;; All standard mapping function with exactly two mandatory arguments that
+;; call the function applied to each element with exactly one argument are
 ;; supported by `map-with-progress-reporter', which can be used when no
 ;; progress reporting variant of that function has been defined here.  But
 ;; any optional arguments the original might have are not supported.
+
+;;; TODO:
+
+;; * support all builtin and cl mapping functions
+;; * support FN that take any number of arguments
+;; * support multiple sequences
 
 ;;; Code:
 
@@ -117,13 +124,6 @@ Also see `make-progress-reporter'.
 
 \(fn MESSAGE FUNCTION [OBARRAY MIN-VALUE MAX-VALUE CURRENT-VALUE MIN-CHANGE MIN-TIME])"
   `(map-with-progress-reporter ,msg 'mapatoms ,fn ,seq ,min ,max ,@rest))
-
-(defmacro maphash-with-progress-reporter (msg fn seq &optional min max &rest rest)
-  "Like `maphash' but report progress in the echo area.
-Also see `make-progress-reporter'.
-
-\(fn MESSAGE FUNCTION HASH [MIN-VALUE MAX-VALUE CURRENT-VALUE MIN-CHANGE MIN-TIME])"
-  `(map-with-progress-reporter ,msg 'maphash ,fn ,seq ,min ,max ,@rest))
 
 (defmacro map-keymap-internal-with-progress-reporter
   (msg fn seq &optional min max &rest rest)
