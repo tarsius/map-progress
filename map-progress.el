@@ -50,7 +50,7 @@
 
 (defmacro map-with-progress-reporter (msg map fn seq &optional min max &rest rest)
   "Apply FUNCTION to each element of SEQUENCE using mapping function MAP.
-Report progress in the echo.  Also see `make-progress-reporter'.
+Report progress in the echo area.  Also see `make-progress-reporter'.
 
 \(fn MESSAGE MAP FUNCTION SEQUENCE [MIN-VALUE MAX-VALUE CURRENT-VALUE MIN-CHANGE MIN-TIME])"
   (let ((idx (make-symbol "--map-with-progress-idx--"))
@@ -125,9 +125,8 @@ Also see `make-progress-reporter'.
 \(fn MESSAGE FUNCTION HASH [MIN-VALUE MAX-VALUE CURRENT-VALUE MIN-CHANGE MIN-TIME])"
   `(map-with-progress-reporter ,msg 'maphash ,fn ,seq ,min ,max ,@rest))
 
-(defmacro map-keymap-internal-with-progress-reporter (msg fn seq
-							  &optional min max
-							  &rest rest)
+(defmacro map-keymap-internal-with-progress-reporter
+  (msg fn seq &optional min max &rest rest)
   "Like `map-keymap-internal' but report progress in the echo area.
 Also see `make-progress-reporter'.
 
