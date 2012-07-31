@@ -61,20 +61,20 @@ Report progress in the echo area.  Also see `make-progress-reporter'.
 
 \(fn MESSAGE MAP FUNCTION SEQUENCE [MIN-VALUE MAX-VALUE CURRENT-VALUE MIN-CHANGE MIN-TIME])"
   (let ((idx (make-symbol "--map-with-progress-idx--"))
-	(msm (make-symbol "--map-with-progress-msm--"))
-	(lst (make-symbol "--map-with-progress-lst--"))
-	(prg (make-symbol "--map-with-progress-prg--"))
-	(elt (make-symbol "--map-with-progress-elt--")))
+        (msm (make-symbol "--map-with-progress-msm--"))
+        (lst (make-symbol "--map-with-progress-lst--"))
+        (prg (make-symbol "--map-with-progress-prg--"))
+        (elt (make-symbol "--map-with-progress-elt--")))
     `(let* ((,idx 0)
-	    (,msm ,msg)
-	    (,lst ,seq)
-	    (,prg (make-progress-reporter
-		   ,msm (or ,min 0) (or ,max (length ,lst)) ,@rest)))
+            (,msm ,msg)
+            (,lst ,seq)
+            (,prg (make-progress-reporter
+                   ,msm (or ,min 0) (or ,max (length ,lst)) ,@rest)))
        (prog1 (funcall ,map (lambda (,elt)
-			      (prog1 (funcall ,fn ,elt)
-				(progress-reporter-update ,prg (incf ,idx))))
-		       ,lst)
-	 (progress-reporter-done ,prg)))))
+                              (prog1 (funcall ,fn ,elt)
+                                (progress-reporter-update ,prg (incf ,idx))))
+                       ,lst)
+         (progress-reporter-done ,prg)))))
 
 (defmacro mapc-with-progress-reporter (msg fn seq &optional min max &rest rest)
   "Like `mapc' but report progress in the echo area.
@@ -142,13 +142,16 @@ the form (SYMBOL MESSAGE) in which case SYMBOL is lexically bound to
 \"MESSAGE...\".  The value of the last form in BODY is returned."
   (declare (indent 1))
   (let ((sym (if (listp message)
-		 (prog1 (car message)
-		   (setq message (cadr message)))
-	       (make-symbol "--with-message--"))))
+                 (prog1 (car message)
+                   (setq message (cadr message)))
+               (make-symbol "--with-message--"))))
     `(lexical-let ((,sym (concat ,message "...")))
        (message ,sym)
        (prog1 (progn ,@body)
-	 (message (concat ,sym "done"))))))
+         (message (concat ,sym "done"))))))
 
 (provide 'map-progress)
+;; Local Variables:
+;; indent-tabs-mode: nil
+;; End:
 ;;; map-progress.el ends here
