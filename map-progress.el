@@ -4,7 +4,7 @@
 
 ;; Author: Jonas Bernoulli <jonas@bernoul.li>
 ;; Created: 20100714
-;; Version: 0.3.0
+;; Version: 0.4.0
 ;; Homepage: https://github.com/tarsius/map-progress/
 ;; Keywords: convenience
 
@@ -25,7 +25,7 @@
 
 ;;; Commentary:
 
-;; This library defines mapping macros that report progress.
+;; This package defines mapping macros that report progress.
 
 ;; For many of the standard and CL mapping functions like `mapc' macros
 ;; like `mapc-with-progress-reporter' are defined here.  The arguments
@@ -51,9 +51,6 @@
 ;; * support multiple sequences
 
 ;;; Code:
-
-(eval-when-compile
-  (require 'cl))
 
 (defmacro map-with-progress-reporter (msg map fn seq &optional min max &rest rest)
   "Apply FUNCTION to each element of SEQUENCE using mapping function MAP.
@@ -83,40 +80,12 @@ Also see `make-progress-reporter'.
 \(fn MESSAGE FUNCTION SEQUENCE [MIN-VALUE MAX-VALUE CURRENT-VALUE MIN-CHANGE MIN-TIME])"
   `(map-with-progress-reporter ,msg 'mapc ,fn ,seq ,min ,max ,@rest))
 
-(defmacro mapcan-with-progress-reporter (msg fn seq &optional min max &rest rest)
-  "Like `mapcan' but report progress in the echo area.
-There may be only one SEQUENCE.  Also see `make-progress-reporter'.
-
-\(fn MESSAGE FUNCTION SEQUENCE [MIN-VALUE MAX-VALUE CURRENT-VALUE MIN-CHANGE MIN-TIME])"
-  `(map-with-progress-reporter ,msg 'mapcan ,fn ,seq ,min ,max ,@rest))
-
 (defmacro mapcar-with-progress-reporter (msg fn seq &optional min max &rest rest)
   "Like `mapcar' but report progress in the echo area.
 Also see `make-progress-reporter'.
 
 \(fn MESSAGE FUNCTION SEQUENCE [MIN-VALUE MAX-VALUE CURRENT-VALUE MIN-CHANGE MIN-TIME])"
   `(map-with-progress-reporter ,msg 'mapcar ,fn ,seq ,min ,max ,@rest))
-
-(defmacro mapcon-with-progress-reporter (msg fn seq &optional min max &rest rest)
-  "Like `mapcon' but report progress in the echo area.
-There may be only one SEQUENCE.  Also see `make-progress-reporter'.
-
-\(fn MESSAGE FUNCTION SEQUENCE [MIN-VALUE MAX-VALUE CURRENT-VALUE MIN-CHANGE MIN-TIME])"
-  `(map-with-progress-reporter ,msg 'mapcon ,fn ,seq ,min ,max ,@rest))
-
-(defmacro mapl-with-progress-reporter (msg fn seq &optional min max &rest rest)
-  "Like `mapl' but report progress in the echo area.
-There may be only one SEQUENCE.  Also see `make-progress-reporter'.
-
-\(fn MESSAGE FUNCTION SEQUENCE [MIN-VALUE MAX-VALUE CURRENT-VALUE MIN-CHANGE MIN-TIME])"
-  `(map-with-progress-reporter ,msg 'mapl ,fn ,seq ,min ,max ,@rest))
-
-(defmacro maplist-with-progress-reporter (msg fn seq &optional min max &rest rest)
-  "Like `maplist' but report progress in the echo area.
-There may be only one SEQUENCE.  Also see `make-progress-reporter'.
-
-\(fn MESSAGE FUNCTION SEQUENCE [MIN-VALUE MAX-VALUE CURRENT-VALUE MIN-CHANGE MIN-TIME])"
-  `(map-with-progress-reporter ,msg 'maplist ,fn ,seq ,min ,max ,@rest))
 
 (defmacro mapatoms-with-progress-reporter (msg fn seq &optional min max &rest rest)
   "Like `mapatoms' but report progress in the echo area.
