@@ -58,6 +58,52 @@ There may be only one SEQUENCE.  Also see `make-progress-reporter'.
 \(fn MESSAGE FUNCTION SEQUENCE [MIN-VALUE MAX-VALUE CURRENT-VALUE MIN-CHANGE MIN-TIME])"
   `(map-with-progress-reporter ,msg 'maplist ,fn ,seq ,min ,max ,@rest))
 
+(defmacro dolist-with-progress-reporter (spec message &rest body)
+  "Loop over a list and report progress in the echo area.
+Evaluate BODY with VAR bound to each `car' from LIST, in turn.
+Then evaluate RESULT to get return value, default nil.
+An implicit nil block is established around the loop.
+
+At each iteration MESSAGE followed by progress percentage is
+printed in the echo area.  After the loop is finished, MESSAGE
+followed by word \"done\" is printed.  This macro is a
+convenience wrapper around `make-progress-reporter' and friends.
+
+\(fn (VAR LIST [RESULT]) MESSAGE BODY...)"
+  (let ((temp (make-symbol "--cl-dolist-temp--"))
+        (temp2 (make-symbol "--cl-dolist-temp2--"))
+        (temp3 (make-symbol "--cl-dolist-temp3--")))
+    (set temp3 (length (nth 1 spec)))
+    ;; FIXME: Copy&pasted from subr.el.
+    `(block nil
+       ;; This is not a reliable test, but it does not matter because both
+       ;; semantics are acceptable, tho one is slightly faster with dynamic
+       ;; scoping and the other is slightly faster (and has cleaner semantics)
+       ;; with lexical scoping.
+       ,(if lexical-binding
+            `(let ((,temp ,(nth 1 spec))
+                   (,temp2 (make-progress-reporter ,message 0 ,temp3)))
+               (while ,temp
+                 (let ((,(car spec) (car ,temp)))
+                   ,@body
+                   (setq ,temp (cdr ,temp))
+                   (progress-reporter-update ,temp2 (- ,temp3 (length ,temp)))))
+               (progress-reporter-done ,temp2)
+               ,@(if (cdr (cdr spec))
+                     ;; FIXME: This let often leads to "unused var" warnings.
+                     `((let ((,(car spec) nil)) ,@(cdr (cdr spec))))))
+          `(let ((,temp ,(nth 1 spec))
+                 (,temp2 (make-progress-reporter ,message 0 ,temp3))
+                 ,(car spec))
+             (while ,temp
+               (setq ,(car spec) (car ,temp))
+               ,@body
+               (setq ,temp (cdr ,temp))
+               (progress-reporter-update ,temp2 (- ,temp3 (length ,temp))))
+             (progress-reporter-done ,temp2)
+             ,@(if (cdr (cdr spec))
+                   `((setq ,(car spec) nil) ,@(cddr spec))))))))
+
 (provide 'map-progress-cl)
 ;; Local Variables:
 ;; indent-tabs-mode: nil
