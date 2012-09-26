@@ -61,5 +61,6 @@ There may be only one SEQUENCE.  Also see `make-progress-reporter'.
 (provide 'map-progress-cl)
 ;; Local Variables:
 ;; indent-tabs-mode: nil
+;; byte-compile-warnings: (not cl-functions)
 ;; End:
 ;;; map-progress.el ends here
