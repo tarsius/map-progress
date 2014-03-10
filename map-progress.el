@@ -52,6 +52,8 @@
 
 ;;; Code:
 
+(require 'cl)
+
 (defmacro map-with-progress-reporter (msg map fn seq &optional min max &rest rest)
   "Apply FUNCTION to each element of SEQUENCE using mapping function MAP.
 Report progress in the echo area.  Also see `make-progress-reporter'.
@@ -94,6 +96,34 @@ Also see `make-progress-reporter'.
 \(fn MESSAGE FUNCTION [OBARRAY MIN-VALUE MAX-VALUE CURRENT-VALUE MIN-CHANGE MIN-TIME])"
   `(map-with-progress-reporter ,msg 'mapatoms ,fn ,seq ,min ,max ,@rest))
 
+(defmacro mapcan-with-progress-reporter (msg fn seq &optional min max &rest rest)
+  "Like `mapcan' but report progress in the echo area.
+There may be only one SEQUENCE.  Also see `make-progress-reporter'.
+
+\(fn MESSAGE FUNCTION SEQUENCE [MIN-VALUE MAX-VALUE CURRENT-VALUE MIN-CHANGE MIN-TIME])"
+  `(map-with-progress-reporter ,msg 'mapcan ,fn ,seq ,min ,max ,@rest))
+
+(defmacro mapcon-with-progress-reporter (msg fn seq &optional min max &rest rest)
+  "Like `mapcon' but report progress in the echo area.
+There may be only one SEQUENCE.  Also see `make-progress-reporter'.
+
+\(fn MESSAGE FUNCTION SEQUENCE [MIN-VALUE MAX-VALUE CURRENT-VALUE MIN-CHANGE MIN-TIME])"
+  `(map-with-progress-reporter ,msg 'mapcon ,fn ,seq ,min ,max ,@rest))
+
+(defmacro mapl-with-progress-reporter (msg fn seq &optional min max &rest rest)
+  "Like `mapl' but report progress in the echo area.
+There may be only one SEQUENCE.  Also see `make-progress-reporter'.
+
+\(fn MESSAGE FUNCTION SEQUENCE [MIN-VALUE MAX-VALUE CURRENT-VALUE MIN-CHANGE MIN-TIME])"
+  `(map-with-progress-reporter ,msg 'mapl ,fn ,seq ,min ,max ,@rest))
+
+(defmacro maplist-with-progress-reporter (msg fn seq &optional min max &rest rest)
+  "Like `maplist' but report progress in the echo area.
+There may be only one SEQUENCE.  Also see `make-progress-reporter'.
+
+\(fn MESSAGE FUNCTION SEQUENCE [MIN-VALUE MAX-VALUE CURRENT-VALUE MIN-CHANGE MIN-TIME])"
+  `(map-with-progress-reporter ,msg 'maplist ,fn ,seq ,min ,max ,@rest))
+
 (defmacro mprg-with-message (message &rest body)
   "Display MESSAGE before and after executing the forms in BODY.
 
@@ -114,5 +144,6 @@ the form (SYMBOL MESSAGE) in which case SYMBOL is lexically bound to
 (provide 'map-progress)
 ;; Local Variables:
 ;; indent-tabs-mode: nil
+;; byte-compile-warnings: (not cl-functions)
 ;; End:
 ;;; map-progress.el ends here
