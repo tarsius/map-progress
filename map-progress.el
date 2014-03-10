@@ -1,10 +1,8 @@
 ;;; map-progress.el --- mapping macros that report progress
 
-;; Copyright (C) 2010-2012  Jonas Bernoulli
+;; Copyright (C) 2010-2014  Jonas Bernoulli
 
 ;; Author: Jonas Bernoulli <jonas@bernoul.li>
-;; Created: 20100714
-;; Version: 0.4.0
 ;; Homepage: https://github.com/tarsius/map-progress/
 ;; Keywords: convenience
 
