@@ -44,12 +44,6 @@
 ;; progress reporting variant of that function has been defined here.  But
 ;; any optional arguments the original might have are not supported.
 
-;;; TODO:
-
-;; * support all builtin and cl mapping functions
-;; * support FN that take any number of arguments
-;; * support multiple sequences
-
 ;;; Code:
 
 (require 'cl-lib)
