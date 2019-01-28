@@ -3,8 +3,10 @@
 ;; Copyright (C) 2010-2014, 2019  Jonas Bernoulli
 
 ;; Author: Jonas Bernoulli <jonas@bernoul.li>
-;; Homepage: https://github.com/tarsius/map-progress/
+;; Homepage: https://github.com/tarsius/map-progress
 ;; Keywords: convenience
+
+;; Package-Requires: ((cl-lib "0.6.1"))
 
 ;; This file is not part of GNU Emacs.
 
