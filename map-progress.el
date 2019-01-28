@@ -1,6 +1,6 @@
-;;; map-progress.el --- mapping macros that report progress
+;;; map-progress.el --- mapping macros that report progress  -*- lexical-binding: t -*-
 
-;; Copyright (C) 2010-2014  Jonas Bernoulli
+;; Copyright (C) 2010-2014, 2019  Jonas Bernoulli
 
 ;; Author: Jonas Bernoulli <jonas@bernoul.li>
 ;; Homepage: https://github.com/tarsius/map-progress/
@@ -134,7 +134,7 @@ the form (SYMBOL MESSAGE) in which case SYMBOL is lexically bound to
                  (prog1 (car message)
                    (setq message (cadr message)))
                (make-symbol "--with-message--"))))
-    `(lexical-let ((,sym (concat ,message "...")))
+    `(let ((,sym (concat ,message "...")))
        (message ,sym)
        (prog1 (progn ,@body)
          (message (concat ,sym "done"))))))
